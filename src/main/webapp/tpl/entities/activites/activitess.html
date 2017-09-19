@@ -1,0 +1,112 @@
+ <div class="wrapper-md">
+    <div class="panel panel-default">
+       <div class="panel-heading">
+         <div class="row">
+           <form class="form-horizontal form-label-left input_mask">
+
+
+                  <div class="form-group col-sm-5">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="activites">Activites </label>
+                    <div class="input-group col-md-7 col-sm-7 col-xs-12">
+                      <ui-select ng-model="activite.libelle" ng-required="false">
+                          <ui-select-match placeholder="Select Activite">{{$select.selected.libelle}}</ui-select-match>
+                          <ui-select-choices repeat="activites in vm.activitess | filter: $select.search">
+                              <div ng-bind-html="activites.libelle | highlight: $select.search"></div>
+                          </ui-select-choices>
+                        </ui-select> 
+                    </div>
+                  </div>
+
+                  <div class="form-group col-sm-5">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="debut">Debut </label>
+                    <div class="input-group col-md-7 col-sm-7 col-xs-12">
+                        <input  id="debut" type="text" class="form-control" name="debut"    ng-required="false"  uib-datepicker-popup="{{dateformat}}"  ng-model="vm.searchActivite.dateDebut"  is-open="vm.datePickerOpenStatus.dateDebut"
+                          />
+                          <span class="input-group-btn">
+                              <button type="button" class="btn btn-default" ng-click="vm.openCalendar('dateDebut')"><i class="glyphicon glyphicon-calendar"></i></button>
+                          </span>
+                    </div>
+                  </div>
+
+
+                  <div class="form-group col-sm-5">
+                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="responsable">Responsable </label>
+                     <div class="input-group col-md-7 col-sm-7 col-xs-12">
+                      <ui-select ng-model="vm.searchActivite.responsable.nom"    ng-required="false">
+                              <ui-select-match placeholder="Select Responsable">{{$select.selected.nom}}</ui-select-match>
+                              <ui-select-choices repeat="responsable in vm.responsables | filter: $select.search">
+                                  <div ng-bind-html="responsable.nom | highlight: $select.search"></div>
+                              </ui-select-choices>
+                            </ui-select> 
+                    </div>
+                  </div>
+
+                  
+
+
+                  <div class="form-group col-sm-5">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fin">Fin </label>
+                    <div class="input-group col-md-7 col-sm-7 col-xs-12">
+                        <input  id="debut" type="text" class="form-control" name="fin"    ng-required="false"  uib-datepicker-popup="{{dateformat}}"  ng-model="vm.searchActivite.dateFin"  is-open="vm.datePickerOpenStatus.dateFin"
+                          />
+                          <span class="input-group-btn">
+                              <button type="button" class="btn btn-default" ng-click="vm.openCalendar('dateFin')"><i class="glyphicon glyphicon-calendar"></i></button>
+                          </span>
+                    </div>
+                  </div>
+             </form>
+         </div>
+       </div>
+        <div class="panel-body table-responsive">
+
+            <div>
+              <div class="form-group" style='float: right;'>
+                 <button class="btn btn-primary" ui-sref="articles.activites.new" tooltip="Ajouter un article"><i class="fa fa-plus"></i></button>
+              </div>
+
+
+              <table id="dt_article" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-bordered table-hover table-striped">
+
+                            <thead>
+                    <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                         <th><span >Libelle</span></th>
+                         <th><span >Date Debut</span></th>
+                         <th><span >Date Fin</span></th>
+                         <th><span >Responsable</span></th>
+
+                        <th >
+                           Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="activites in vm.activitess">
+                         <td>{{activites.libelle}}</td>
+                         <td>{{activites.dateDebut | date:'mediumDate'}}</td>
+                         <td>{{activites.dateFin | date:'mediumDate'}}</td>
+                         <td>{{activites.responsable.nom}}</td>
+
+                        <td >
+
+                           
+                            <button type="submit"   ui-sref="articles.activites.edit({id:activites.id})" class="btn btn-sm btn-default"  tooltip="Modifier">
+                                <i class="fa fa-edit">
+                                </i>
+                            </button>
+
+                            <button type="submit"  ui-sref="articles.activites.delete({id:activites.id})"  class="btn btn-sm btn-danger"  tooltip="Supprimer">
+                                <i class="fa fa-trash">
+                                </i>
+                            </button>
+
+                        </td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
