@@ -68,13 +68,21 @@ angular.module('app')
 
       
       $scope.dtOptions = {
-        paginationType : 'simple_numbers',
+        paginationType : 'full_numbers',
             displayLength: 15,
             bFilter:false,
             bLengthChange: false,
-            bInfo: false,
+            bInfo: false
+            ,
             oLanguage:{
-                sUrl:'lang/dataTables_fr.txt'
+              "sEmptyTable":     "Aucun enregistrement disponible",
+              "oPaginate": {
+                  "sFirst":      "<<",
+                  "sPrevious":   "<",
+                  "sNext":       ">",
+                  "sLast":       ">>"
+               }
+               // sUrl:'lang/dataTables_fr.txt'
             }
       };
            

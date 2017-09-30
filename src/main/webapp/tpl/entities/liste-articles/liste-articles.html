@@ -8,10 +8,11 @@
                         <div class="form-group col-sm-4">
                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="article">Article </label>
                            <div class="input-group col-md-7 col-sm-7 col-xs-12">
-                              <select class="select2_single form-control" tabindex="-1" ng-model="listeArticlesActivite">
-                                <option></option>                              
-                                <option ng-repeat="listeArticles in vm.listeArticless" value='{{listeArticles.activite}}'>{{listeArticles.activite}}</option>
+                            <select class="select2_single form-control" name="produit" id="produit"
+                              ng-options="produit.denomination for produit  in vm.produits track by produit.id"
+                              ng-model="vm.produit" ng-change="vm.search()">
                             </select>
+
                           </div>
                         </div>
                       
@@ -19,12 +20,13 @@
                         <div class="form-group col-sm-4">
                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="responsable">Responsable </label>
                            <div class="input-group col-md-7 col-sm-7 col-xs-12">
-                             <ui-select ng-model="vm.activites.responsable"    ng-required="false">
-                              <ui-select-match placeholder="Select Responsable">{{$select.selected.responsable.nom}}</ui-select-match>
-                              <ui-select-choices repeat="activites in vm.activitess | filter: $select.search">
-                                  <div ng-bind-html="activites.responsable.nom | highlight: $select.search"></div>
-                              </ui-select-choices>
-                            </ui-select> 
+
+                            <select class="select2_single form-control" name="employe" id="employe"
+                              ng-options="employe.nom for employe in vm.employes track by employe.id"
+                              ng-model="vm.employe">
+                            </select>
+
+                            
                           </div>
                         </div>
                       
@@ -33,7 +35,7 @@
                         <div class="form-group col-sm-4">
                           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="debut">Debut </label>
                           <div class="input-group col-md-7 col-sm-7 col-xs-12">
-                              <input  id="debut" type="text" class="form-control" name="debut"    ng-required="false"  uib-datepicker-popup="{{dateformat}}"  ng-model="vm.listeArticles.lastIn"  is-open="vm.datePickerOpenStatus.dateDebut"
+                              <input  id="debut" type="text" class="form-control" name="debut"    ng-required="false"  uib-datepicker-popup="{{dateformat}}"  ng-model="vm.fromDate"  is-open="vm.datePickerOpenStatus.dateDebut"
                                 />
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-default" ng-click="vm.openCalendar('dateDebut')"><i class="glyphicon glyphicon-calendar"></i></button>
@@ -47,12 +49,14 @@
                         <div class="form-group col-sm-4">
                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="zone">Zone </label>
                            <div class="input-group col-md-7 col-sm-7 col-xs-12">
-                            <ui-select ng-model="vm.entrepotProduits.entrepot"    ng-required="false">
-                              <ui-select-match placeholder="Select Zone">{{$select.selected.entrepot.libelle}}</ui-select-match>
-                              <ui-select-choices repeat="entrepotProduit in vm.entrepotProduits | filter: $select.search">
-                                  <div ng-bind-html="entrepotProduit.entrepot.libelle | highlight: $select.search"></div>
-                              </ui-select-choices>
-                            </ui-select> 
+
+                           
+                            <select class="select2_single form-control" name="entrepot" id="entrepot"
+                              ng-options="entrepot.libelle for entrepot  in vm.entrepots track by entrepot.id"
+                              ng-model="vm.entrepot" ng-change="vm.search()">
+                            </select>
+
+                             
                           </div>
                         </div>
                       
@@ -77,7 +81,7 @@
                         <div class="form-group col-sm-4">
                           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fin">Fin </label>
                           <div class="input-group col-md-7 col-sm-7 col-xs-12">
-                              <input  id="debut" type="text" class="form-control" name="fin"    ng-required="false"  uib-datepicker-popup="{{dateformat}}"  ng-model="vm.listeArticles.lastOut"  is-open="vm.datePickerOpenStatus.dateFin"
+                              <input  id="debut" type="text" class="form-control" name="fin"    ng-required="false"  uib-datepicker-popup="{{dateformat}}"  ng-model="vm.toDate"  is-open="vm.datePickerOpenStatus.dateFin"
                                 />
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-default" ng-click="vm.openCalendar('dateFin')"><i class="glyphicon glyphicon-calendar"></i></button>
@@ -114,7 +118,7 @@
                             </thead>
 
                             <tbody>
-                                <tr ng-repeat="listeArticles in vm.listeArticless|filter: listeArticlesActivite">
+                                <tr ng-repeat="listeArticles in vm.listeArticless">
                                     <td>{{listeArticles.activite}}</td>
                                      <td>{{listeArticles.unite}}</td>
                                      <td>{{listeArticles.soldeInitial}}</td>
